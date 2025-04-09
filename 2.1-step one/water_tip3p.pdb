@@ -1,0 +1,4 @@
+ATOM      1  OH  TIP3X   1       0.000   0.000   0.000  1.00  0.00      AGUA O
+ATOM      2  H1  TIP3X   1       0.586   0.757   0.000  1.00  0.00      AGUA H
+ATOM      3  H2  TIP3X   1       0.586  -0.757   0.000  1.00  0.00      AGUA H
+END

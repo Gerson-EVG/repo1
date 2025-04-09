@@ -1,0 +1,77 @@
+! 23/09/2024. Falta editar este archivo con los parámetros del force field de Martina.
+! 25/09/2024. Modifiqué los parámetros a los de Martina. 
+
+ATOMS
+MASS  -1  HT     1.00800 ! TIPS3P WATER HYDROGEN
+MASS  -1  OT    15.99940 ! TIPS3P WATER OXYGEN
+MASS  -1  N     14.00700 ! No3-
+MASS  -1  Ox    15.99940 ! No3-
+MASS  -1  PB    207.20000 ! Pb2+
+
+! OK
+
+BONDS
+!V(bond) = Kb(b - b0)**2
+!Kb: kcal/mole/A**2
+!b0: A
+!
+! atom types     Kb      b0
+!
+HT   HT    0.0         1.5139  ! from TIPS3P geometry (for SHAKE w/PARAM)
+HT   OT    450.0       0.9572  ! from TIPS3P geometry
+N    Ox    634.2       1.256   ! OPLS-aa
+! OK
+
+
+ANGLES
+!V(angle) = Ktheta(Theta - Theta0)**2
+!V(Urey-Bradley) = Kub(S - S0)**2
+!Ktheta: kcal/mole/rad**2
+!Theta0: degrees
+!Kub: kcal/mole/A**2 (Urey-Bradley)
+!S0: A
+!
+! atom types     Ktheta  Theta0   Kub    S0
+!
+HT   OT   HT    55.0       104.52   ! FROM TIPS3P GEOMETRY
+Ox   N    Ox    120.82     120.00   ! OPLS-aa
+! OK
+
+
+DIHEDRALS
+! ******** V(dihedral) = Kchi(1 + cos(n(chi) - delta))
+
+
+! OK
+
+IMPROPER
+!
+!V(improper) = Kchi(1 + cos(n(chi) - delta))
+!V(improper) = Kpsi(psi - psi0)**2
+!
+!Kpsi: kcal/mole/rad**2
+!psi0: degrees
+!
+Ox   Ox   N    Ox       1.000      2     180.0 ! ok, estos parámetros son equivalentes al OPLS.
+Ox   Ox   Ox   N        0.000      2     0.00  ! añadido a mano, en psf se detectó pero no existe en force field.
+! OK
+
+NONBONDED  NBXMOD 5  ATOM CDIEL FSHIFT VATOM VDISTANCE VFSWITCH -
+     CUTNB 14.0  CTOFNB 12.0  CTONNB 10.0  EPS 1.0  E14FAC 1.0  WMIN 1.5
+!********* V(Lennard-Jones) = Eps,i,j[(Rmin,i,j/ri,j)**12 - 2(Rmin,i,j/ri,j)**6]
+!
+!epsilon: kcal/mole, Eps,i,j = sqrt(eps,i * eps,j)
+!Rmin/2: A, Rmin,i,j = Rmin/2,i + Rmin/2,j
+!
+!atom  ignored    epsilon      Rmin/2   ignored   eps,1-4       Rmin/2,1-4
+!
+HT     0.0        -0.046   0.2245  ! TIP3
+OT     0.0        -0.1521  1.7682  ! TIP3
+Ox     0.0        -0.1700  1.4918  ! OPLS
+N      0.0        -0.1600  1.4285  ! OPLS
+PB     0.0        -0.19112 1.3363  ! OPLS
+! OK
+
+END
+
+
